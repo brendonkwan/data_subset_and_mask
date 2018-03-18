@@ -52,7 +52,10 @@ username and password, respectively.
 3. Create the `employees` database. If the database exists, it will be
    recreated.
 
+        $ cd test_db
         $ mysql < employees.sql
+        $ mysql --table < test_employees_md5.sql
+        $ cd ..
 
 4. Create an empty database named `masked_subset` with the same structure
    as the `employees` database.
@@ -61,7 +64,6 @@ username and password, respectively.
 
 5. Test the databases.
 
-        $ mysql --table < test_employees_md5.sql
         $ mysql --table < test_masked_subset_empty.sql
 
 ## LICENSE
