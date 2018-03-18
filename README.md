@@ -1,16 +1,6 @@
 # Data subsetting and masking
 
-An example of data subsetting and data masking, where:
-
- * Data subsetting is the process of creating a new database that has a copy
-of a meaningful subset of an existing large database.
- * Data masking is the process of updating or removing data that is private
-or sensitive. Companies have a legal obligation to protect private and
-sensitive information, so it's important for such information to be masked.
-
-Data subsetting and data masking are very useful in creating test
-environments that mimic production but don't have private or sensitive
-information.
+An example of data subsetting and data masking.
 
 This example uses MySQL, Bash and Python to create a new database,
 named `masked_subset`, that contains a masked subset of the fictitious
@@ -62,6 +52,10 @@ text:
         $ cd ..
         $ ./create_empty_masked_subset.sh
         $ mysql --table < test_masked_subset_empty.sql
+
+# Improvements to make
+
+* Clear data from tables first.
 
 ## LICENSE
 This work is licensed under the 
