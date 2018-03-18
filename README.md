@@ -1,38 +1,68 @@
 # Data subsetting and masking
 
-An example of data subsetting and data masking. Uses MySQL, Bash and Python
-to read a subset of the fictitious employee data from the 'employees' database,
-mask the data, and write the masked data to the 'masked_employee_subset'
-database.
+An example of data subsetting and data masking, where:
+
+ * Data subsetting is the process of creating a new database that has a copy
+of a meaningful subset of an existing large database.
+ * Data masking is the process of updating or removing data that is private
+or sensitive. Companies have a legal obligation to protect private and
+sensitive information, so it's important for such information to be masked.
+
+Data subsetting and data masking are very useful in creating test
+environments that mimic production but don't have private or sensitive
+information.
+
+This example uses MySQL, Bash and Python to create a new database,
+named `masked_subset`, that contains a masked subset of the fictitious
+employee data from the `employees` database.
 
 ## Where the data comes from
 
-The fictitious employee data was taken from the GitHub repository named
-[datacharmer/test_db](https://github.com/datacharmer/test_db), which was
+The fictitious data was taken from the GitHub repository named
+[`datacharmer/test_db`](https://github.com/datacharmer/test_db), which was
 distributed under the
 [Creative Commons Attribution-Share Alike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/).
 
 The employee data consists of about 300,000 employee records with 2.8 million
 salary entries.
 
+## Prerequisites
+
+1. Install MySQL.
+1. Install Python 3.
+1. Install the Python package named 'MySQL Connector/Python'.
+
+        $ pip install mysql-connector-python
+
+1. Create a MySQL configuration file at `~/.my.cnf` containing the following
+text:
+
+        [client]
+        user=<USERNAME>
+        password=<PASSWORD>
+
+Where <USERNAME> and <PASSWORD> are replaced with your MySQL database
+username and password, respectively.
+1. Something else.
+
 ## Installation:
 
 1. Download the repository.
 2. Change directory to the repository.
-3. Create the 'employees' database. If the database exists, it will be
+3. Create the `employees` database. If the database exists, it will be
    recreated.
 
-    $ mysql < employees.sql
+        $ mysql < employees.sql
 
-4. Create an empty database named 'masked_subset' with the same structure
-   as the 'employees' database.
+4. Create an empty database named `masked_subset` with the same structure
+   as the `employees` database.
 
-    $ ./create_empty_masked_subset.sh
+        $ ./create_empty_masked_subset.sh
 
 5. Test the databases.
 
-    $ mysql --table < test_employees_md5.sql
-    $ mysql --table < test_masked_subset_empty.sql
+        $ mysql --table < test_employees_md5.sql
+        $ mysql --table < test_masked_subset_empty.sql
 
 ## LICENSE
 This work is licensed under the 
