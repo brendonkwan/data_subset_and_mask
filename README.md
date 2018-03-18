@@ -27,59 +27,12 @@ salary entries.
 4. Create an empty database named 'masked_subset' with the same structure
    as the 'employees' database.
 
-    $ mysql --execute='DROP DATABASE IF EXISTS masked_subset'
-    $ mysqladmin create masked_subset
-    $ mysqldump employees --no-data | mysql masked_subset
+    $ ./create_empty_masked_subset.sh
 
-5. 
+5. Test the databases.
 
-## Testing the installation
-
-After installing, you can run one of the following to verify that the
-'employees' database was created correctly.
-
-    mysql -t < test_employees_md5.sql
-    # OR
-    mysql -t < test_employees_sha.sql
-
-For example:
-
-    mysql  -t < test_employees_md5.sql
-    +----------------------+
-    | INFO                 |
-    +----------------------+
-    | TESTING INSTALLATION |
-    +----------------------+
-    +--------------+------------------+----------------------------------+
-    | table_name   | expected_records | expected_crc                     |
-    +--------------+------------------+----------------------------------+
-    | employees    |           300024 | 4ec56ab5ba37218d187cf6ab09ce1aa1 |
-    | departments  |                9 | d1af5e170d2d1591d776d5638d71fc5f |
-    | dept_manager |               24 | 8720e2f0853ac9096b689c14664f847e |
-    | dept_emp     |           331603 | ccf6fe516f990bdaa49713fc478701b7 |
-    | titles       |           443308 | bfa016c472df68e70a03facafa1bc0a8 |
-    | salaries     |          2844047 | fd220654e95aea1b169624ffe3fca934 |
-    +--------------+------------------+----------------------------------+
-    +--------------+------------------+----------------------------------+
-    | table_name   | found_records    | found_crc                        |
-    +--------------+------------------+----------------------------------+
-    | employees    |           300024 | 4ec56ab5ba37218d187cf6ab09ce1aa1 |
-    | departments  |                9 | d1af5e170d2d1591d776d5638d71fc5f |
-    | dept_manager |               24 | 8720e2f0853ac9096b689c14664f847e |
-    | dept_emp     |           331603 | ccf6fe516f990bdaa49713fc478701b7 |
-    | titles       |           443308 | bfa016c472df68e70a03facafa1bc0a8 |
-    | salaries     |          2844047 | fd220654e95aea1b169624ffe3fca934 |
-    +--------------+------------------+----------------------------------+
-    +--------------+---------------+-----------+
-    | table_name   | records_match | crc_match |
-    +--------------+---------------+-----------+
-    | employees    | OK            | ok        |
-    | departments  | OK            | ok        |
-    | dept_manager | OK            | ok        |
-    | dept_emp     | OK            | ok        |
-    | titles       | OK            | ok        |
-    | salaries     | OK            | ok        |
-    +--------------+---------------+-----------+
+    $ mysql --tables < test_employees_md5.sql
+    $ mysql --tables < test_masked_subset_empty.sql
 
 ## LICENSE
 This work is licensed under the 
