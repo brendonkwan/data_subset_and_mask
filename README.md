@@ -31,8 +31,8 @@ salary entries.
 
 5. Test the databases.
 
-    $ mysql --tables < test_employees_md5.sql
-    $ mysql --tables < test_masked_subset_empty.sql
+    $ mysql --table < test_employees_md5.sql
+    $ mysql --table < test_masked_subset_empty.sql
 
 ## LICENSE
 This work is licensed under the 

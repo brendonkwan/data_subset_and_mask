@@ -24,7 +24,7 @@
 
 USE masked_subset;
 
-SELECT 'TESTING INSTALLATION' as 'INFO';
+SELECT 'TESTING masked_subset DATABASE IS EMPTY' as 'INFO';
 
 DROP TABLE IF EXISTS expected_values, found_values;
 CREATE TABLE expected_values (
@@ -67,7 +67,6 @@ SELECT
 from 
     expected_values e INNER JOIN found_values f USING (table_name); 
 
-
 set @count_fail=(select count(*) from expected_values e inner join found_values f on (e.table_name=f.table_name) where f.recs != e.recs);
 
 select timediff(
@@ -77,3 +76,4 @@ select timediff(
 
 DROP TABLE expected_values,found_values;
 
+select 'count' as summary, if(@count_fail = 0, "OK", "FAIL" ) as result;
