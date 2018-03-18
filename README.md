@@ -41,29 +41,26 @@ text:
         user=<USERNAME>
         password=<PASSWORD>
 
-Where <USERNAME> and <PASSWORD> are replaced with your MySQL database
-username and password, respectively.
-1. Something else.
+    Where `<USERNAME>` and `<PASSWORD>` are replaced with your MySQL database
+    username and password, respectively.
+
 
 ## Installation:
 
 1. Download the repository.
 2. Change directory to the repository.
-3. Create the `employees` database. If the database exists, it will be
+3. Create and test the `employees` database. If the database exists, it will be
    recreated.
 
         $ cd test_db
         $ mysql < employees.sql
         $ mysql --table < test_employees_md5.sql
-        $ cd ..
 
-4. Create an empty database named `masked_subset` with the same structure
+4. Create and test an empty database named `masked_subset` with the same structure
    as the `employees` database.
 
+        $ cd ..
         $ ./create_empty_masked_subset.sh
-
-5. Test the databases.
-
         $ mysql --table < test_masked_subset_empty.sql
 
 ## LICENSE
