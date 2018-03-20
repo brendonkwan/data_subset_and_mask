@@ -12,7 +12,10 @@ for an entity-relationship diagram of the `employees` database.
 
 ## Author
 
-Brendon Kwan
+The files in the root directory were created by Brendon Kwan.
+
+The files in the `test_db` directory were created by
+[Giuseppe Maxia (datacharmer)](https://github.com/datacharmer).
 
 ## Where the data comes from
 
