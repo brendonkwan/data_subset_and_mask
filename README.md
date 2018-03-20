@@ -1,8 +1,11 @@
-# Data subsetting
+# Data subsetter
 
 Uses MySQL, Bash and Python to create a new database, named `subset`,
 that contains a subset of the fictitious employee data from the `employees`
 database.
+
+The size of the subset is measured by the number of employees
+that are copied across. The size is read from the command line.
 
 Click [here](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
 for an entity-relationship diagram of the `employees` database.
