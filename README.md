@@ -1,10 +1,11 @@
-# Data subsetting and masking
+# Data subsetting
 
-An example of data subsetting and data masking.
+Uses MySQL, Bash and Python to create a new database, named `subset`,
+that contains a subset of the fictitious employee data from the `employees`
+database.
 
-This example uses MySQL, Bash and Python to create a new database,
-named `subset`, that contains a masked subset of the fictitious
-employee data from the `employees` database.
+Click [here](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
+for an entity-relationship diagram of the `employees` database.
 
 ## Where the data comes from
 
@@ -53,9 +54,10 @@ text:
         $ ./create_empty_subset.sh
         $ mysql --table < test_subset_empty.sql
 
-# Improvements to make
+5. Copy the given number of employees, `N`, from the `employees` database
+   to the `subset` databse.
 
-* Clear data from tables first.
+        $ ./subsetter.py N
 
 ## LICENSE
 This work is licensed under the 
