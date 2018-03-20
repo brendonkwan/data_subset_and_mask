@@ -5,19 +5,18 @@ import getpass
 import os
 import mysql.connector
 
-EMPLOYEE_SUBSET_COUNT = 1
-
 class Subsetter:
-    def __init__(self, conn):
+    def __init__(self, conn, verbose):
         self.conn = conn
+        self.verbose = verbose
 
-    def create_emp_no_list(self, count):
+    def create_emp_no_list(self, emp_subset_size):
         emp_no_list = []
         cursor = self.conn.cursor()
         query = ("SELECT emp_no "
             "FROM employees.employees "
             "ORDER BY emp_no "
-            "LIMIT {}").format(count)
+            "LIMIT {}").format(emp_subset_size)
         cursor.execute(query)
         for (emp_no,) in cursor.fetchall():
             emp_no_list.append(emp_no)
@@ -26,32 +25,34 @@ class Subsetter:
 
     def copy_emp_records(self, table, emp_no):
         """Copies from the given table of the 'employees' database to the
-        corresponding table of the 'masked_subset' database all records that
+        corresponding table of the 'subset' database all records that
         concern the given employee. No changes are made if the destination table
         already has a record with the given employee number.
         """
         cursor = self.conn.cursor()
-        query = ("INSERT IGNORE INTO masked_subset.{} "
+        query = ("INSERT IGNORE INTO subset.{} "
             "SELECT * "
             "FROM employees.{} "
             "WHERE emp_no = {}").format(table, table, emp_no)
-        print("About to execute: {}".format(query))
+        if self.verbose:
+            print("About to execute: {}".format(query))
         cursor.execute(query)
         self.conn.commit()
         cursor.close()
 
     def copy_dept_records(self, table, dept_no):
         """Copies from the given table of the 'employees' database to the
-        corresponding table of the 'masked_subset' database all records that
+        corresponding table of the 'subset' database all records that
         concern the given department. No changes are made if the destination
         table already has a record with the given department number.
         """
         cursor = self.conn.cursor()
-        query = ("INSERT IGNORE INTO masked_subset.{} "
+        query = ("INSERT IGNORE INTO subset.{} "
             "SELECT * "
             "FROM employees.{} "
             "WHERE dept_no = '{}'").format(table, table, dept_no)
-        print("About to execute: {}".format(query))
+        if self.verbose:
+            print("About to execute: {}".format(query))
         cursor.execute(query)
         cursor.close()
 
@@ -74,8 +75,12 @@ class Subsetter:
         cursor.close()
         return dept_no_list
         
-    def run(self):
-        emp_no_list = self.create_emp_no_list(EMPLOYEE_SUBSET_COUNT)
+    def copy_subset(self, emp_subset_size):
+        """Copies the given number of employees from the "employees"
+        database to the "subset" database. Returns a list containing the
+        "emp_no" value of every employee that was copied.
+        """
+        emp_no_list = self.create_emp_no_list(emp_subset_size)
         for emp_no in emp_no_list:
             self.copy_emp_records('employees', emp_no)
             self.copy_emp_records('salaries', emp_no)
@@ -87,20 +92,29 @@ class Subsetter:
             self.copy_dept_records('dept_emp', emp_no)
             self.copy_dept_records('dept_manager', emp_no)
         self.conn.commit()
+        return emp_no_list
 
 
-class Masker():
-    def __init__(self, conn):
-        self.conn = conn
-
-    def run(self):
-        print('TODO')
-
-        
 def main():
-    conn = mysql.connector.connect(option_files=os.path.expanduser('~/.my.cnf'))
-    Subsetter(conn).run()
-    Masker(conn).run()
+    parser = argparse.ArgumentParser(
+            description='Create a subset of the "employees" database')
+    parser.add_argument('emp_subset_size', type=int,
+            help='Number of employees to include in the subset')
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='Verbose mode')
+    args = parser.parse_args()
+
+    conn = mysql.connector.connect(
+            option_files=os.path.expanduser('~/.my.cnf'))
+
+    subsetter = Subsetter(conn, args.verbose)
+
+    emp_no_list = subsetter.copy_subset(args.emp_subset_size)
+    
+    print('Copied these employees from the "employees" database ' +
+            'to the "subset" database:')
+    for emp_no in emp_no_list:
+        print('emp_no {}'.format(emp_no))
 
 
 if __name__ == '__main__':

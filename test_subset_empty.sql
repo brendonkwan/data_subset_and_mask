@@ -22,9 +22,9 @@
 --  Any similarity to existing people is purely coincidental.
 -- 
 
-USE masked_subset;
+USE subset;
 
-SELECT 'TESTING masked_subset DATABASE IS EMPTY' as 'INFO';
+SELECT 'TESTING SUBSET DATABASE IS EMPTY' as 'INFO';
 
 DROP TABLE IF EXISTS expected_values, found_values;
 CREATE TABLE expected_values (
@@ -68,11 +68,6 @@ from
     expected_values e INNER JOIN found_values f USING (table_name); 
 
 set @count_fail=(select count(*) from expected_values e inner join found_values f on (e.table_name=f.table_name) where f.recs != e.recs);
-
-select timediff(
-    now(),
-    (select create_time from information_schema.tables where table_schema='employees' and table_name='expected_values')
-) as computation_time;
 
 DROP TABLE expected_values,found_values;
 

@@ -3,7 +3,7 @@
 An example of data subsetting and data masking.
 
 This example uses MySQL, Bash and Python to create a new database,
-named `masked_subset`, that contains a masked subset of the fictitious
+named `subset`, that contains a masked subset of the fictitious
 employee data from the `employees` database.
 
 ## Where the data comes from
@@ -46,12 +46,12 @@ text:
         $ mysql < employees.sql
         $ mysql --table < test_employees_md5.sql
 
-4. Create and test an empty database named `masked_subset` with the same structure
+4. Create and test an empty database named `subset` with the same structure
    as the `employees` database.
 
         $ cd ..
-        $ ./create_empty_masked_subset.sh
-        $ mysql --table < test_masked_subset_empty.sql
+        $ ./create_empty_subset.sh
+        $ mysql --table < test_subset_empty.sql
 
 # Improvements to make
 
