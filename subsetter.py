@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Copies the details of the given number of employees from the 'employees'
+# database to the 'subset' database.
+# 
+# Author: Brendon Kwan
+
 import argparse
 import getpass
 import os

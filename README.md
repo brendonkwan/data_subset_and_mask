@@ -10,6 +10,10 @@ that are copied across. The size is read from the command line.
 Click [here](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
 for an entity-relationship diagram of the `employees` database.
 
+## Author
+
+Brendon Kwan
+
 ## Where the data comes from
 
 The fictitious data was taken from the GitHub repository named
